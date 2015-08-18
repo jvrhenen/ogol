@@ -44,7 +44,7 @@ keyword Reserved = "if" | "ifelse" | "while" | "repeat" | "forward" | "back" | "
 
 start syntax Program = Command*; 
 
-syntax Block = Command*;
+syntax Block = "[" Command* "]";
 
 syntax Command = "if" Expr Block
 			   | "ifelse" Expr Block Block
@@ -64,11 +64,13 @@ syntax Command = "if" Expr Block
 syntax Expr = VarId
 			| Number
 			| Boolean
+			| Arithmetic
+			| Comparision
 			| Logical
 			;
 
-syntax FunDef 	= "to" FunId VarId* Block "end";
-syntax FunCall 	= VarId Expr* ";" ;
+syntax FunDef 	= "to" FunId VarId* Command* "end";
+syntax FunCall 	= FunId Expr* ";" ;
 
 syntax Forward 	= "forward" Expr ";" | "fd" Expr ";";
 syntax Back		= "back" Expr ";" | "bk" Expr ";";
@@ -80,13 +82,29 @@ syntax Penup 	= "penup" ";" | "pu" ";";
 
 syntax Logical = Logical "&&" Logical
 			   | Logical "||" Logical
-			   | "(" Expr ")"
-			   ;			   
+			   | Expr
+			   ;
+			   
+syntax Arithmetic 	= left div: Expr l "/" Expr r 
+					> left multi: Expr l "*" Expr r
+					> left ( 
+						add: Expr l "+" Expr r
+         				| sub: Expr l "-" Expr r
+         			);				   
+         			
+syntax Comparision 	= Comparision "\>" Comparision
+					| Comparision "\<" Comparision
+					| Comparision "\>=" Comparision
+					| Comparision "\<=" Comparision
+					| Comparision "=" Comparision
+					| Comparision "!=" Comparision
+					| Expr
+					;         			
 
 lexical Boolean = "true" | "false";
-lexical Number 	
-  = [\-]?[0-9]+ "." [0-9]+
-  ;
+lexical Number 	= [\-]?[0-9]? "." [0-9]+
+ 				| [\-]?[0-9]?
+ 				;
   
 lexical VarId
   = ":" [a-zA-Z][a-zA-Z0-9]* \Reserved  !>> [a-zA-Z0-9];
