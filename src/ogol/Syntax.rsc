@@ -57,6 +57,7 @@ syntax Command = "if" Expr Block
 			   | Left
 			   | Pendown
 			   | Penup
+			   | Pencolor
 			   | FunDef
 			   | FunCall
 			   ;
@@ -79,6 +80,7 @@ syntax Right 	= "right" Expr ";" | "rt" Expr ";";
 syntax Left		= "left" Expr ";" | "lt" Expr ";";
 syntax Pendown 	= "pendown" ";" | "pd" ";";
 syntax Penup 	= "penup" ";" | "pu" ";";
+syntax Pencolor = "setpencolor" Color ";";
 
 syntax Logical = Logical "&&" Logical
 			   | Logical "||" Logical
@@ -102,9 +104,8 @@ syntax Comparision 	= Comparision "\>" Comparision
 					;         			
 
 lexical Boolean = "true" | "false";
-lexical Number 	= [\-]?[0-9]? "." [0-9]+
- 				| [\-]?[0-9]?
- 				;
+lexical Number 	= [\-]?[0-9]* ("." [0-9]+)?;
+lexical Color = "#" [0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f];
   
 lexical VarId
   = ":" [a-zA-Z][a-zA-Z0-9]* \Reserved  !>> [a-zA-Z0-9];

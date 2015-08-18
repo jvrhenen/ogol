@@ -2,7 +2,8 @@ to tree :size
   if :size >= 5 [
   	fd :size;
   	lt 30; tree :size*.7;
-  	rt 60; tree :size*.7;
+  	rt 60; tree :size*-23.21.237;
   	lt 30; bk :size;
+  	setpencolor #123abc;
   ]
 end
