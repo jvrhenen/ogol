@@ -40,7 +40,7 @@ Bonus:
 
 */
 
-keyword Reserved = "if" | "ifelse" | "while" | "repeat" | "forward" | "back" | "right" | "left" | "pendown" | "penup" | "to" | "true" | "false" | "end";
+keyword Reserved = "if" | "ifelse" | "while" | "repeat" | "forward" | "fd" | "back" | "bk" | "home" | "right" | "rt" | "left" | "lt" | "pendown" | "pd" | "penup" | "pu" | "setpencolor" | "to" | "true" | "false" | "end";
 
 start syntax Program = Command*; 
 
