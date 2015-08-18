@@ -1,5 +1,7 @@
 module ogol::Syntax
 
+import vis::ParseTree;
+
 /*
 
 Ogol syntax summary
@@ -82,8 +84,8 @@ syntax Pendown 	= "pendown" ";" | "pd" ";";
 syntax Penup 	= "penup" ";" | "pu" ";";
 syntax Pencolor = "setpencolor" Color ";";
 
-syntax Logical = Logical "&&" Logical
-			   | Logical "||" Logical
+syntax Logical = left Logical "&&" Logical
+			   | left Logical "||" Logical
 			   | Expr
 			   ;
 			   
@@ -94,12 +96,13 @@ syntax Arithmetic 	= left div: Expr l "/" Expr r
          				| sub: Expr l "-" Expr r
          			);				   
          			
-syntax Comparision 	= Comparision "\>" Comparision
+syntax Comparision 	= left
+					(Comparision "\>" Comparision
 					| Comparision "\<" Comparision
 					| Comparision "\>=" Comparision
 					| Comparision "\<=" Comparision
 					| Comparision "=" Comparision
-					| Comparision "!=" Comparision
+					| Comparision "!=" Comparision)
 					| Expr
 					;         			
 
@@ -128,5 +131,4 @@ lexical Whitespace
 
 lexical Comment
   = @category="Comment" "--" ![\n\r]* $
-  ;  
-  
+  ;    
