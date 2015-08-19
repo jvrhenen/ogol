@@ -165,19 +165,30 @@ State eval((Command)`back <Expr e>;`, FunEnv fenv, VarEnv venv, State state) {
 	return state;
 }
 
-State eval((Command)`to <FunId f> <VarId* vars> <Command* cmds> end`, FunEnv fenv, VarEnv venv, State state) {
-	
-	
+State eval((Command)`to <FunId f> <VarId* vars> <Command* cmds> end`, FunEnv fenv, VarEnv venv, State state) {	
 	return state;
 }
 
 State eval((Command)`<FunId f> <Expr* exprs>;`, FunEnv fenv, VarEnv venv, State state) {
-	
 	funDef = fenv[f];
-	println(funDef);
 	
+	vars = [ vid | VarId vid <- funDef.vars];
 	
+	println(size(vars));
+
 	
+	for(int i <- [0 .. size(vars)] ) {
+		value var = funDef.vars[i];
+		println(var);
+	}
+	
+	for(Command c <- funDef.cmds) {
+		println("cmd");
+		
+		
+		// expr -> venv
+		state = eval(c, fenv, venv, state);
+	}
 	return state;
 }
  

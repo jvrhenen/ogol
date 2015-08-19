@@ -85,7 +85,7 @@ syntax Expr
           )
    ;
 
-syntax FunDef 	= "to" FunId id VarId* Command* "end";
+syntax FunDef 	= "to" FunId id VarId* vars Command* cmds "end";
 syntax FunCall 	= FunId Expr* ";" ;
 
 syntax Forward 	= "forward" Expr ";" | "fd" Expr ";";
