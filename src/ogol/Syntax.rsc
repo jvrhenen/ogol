@@ -46,7 +46,7 @@ keyword Reserved = "if" | "ifelse" | "while" | "repeat" | "forward" | "fd" | "ba
 
 start syntax Program = Command*; 
 
-syntax Block = "[" Command* "]";
+syntax Block = "[" Command* cmds "]";
 
 syntax Command = "if" Expr Block
 			   | "ifelse" Expr Block Block
@@ -63,16 +63,29 @@ syntax Command = "if" Expr Block
 			   | FunDef
 			   | FunCall
 			   ;
-				
-syntax Expr = VarId
-			| Number
-			| Boolean
-			| Arithmetic
-			| Comparision
-			| Logical
-			;
 
-syntax FunDef 	= "to" FunId VarId* Command* "end";
+syntax Expr 
+   = Boolean
+   | Number
+   | VarId
+   > left   div: Expr "/" Expr 
+   > left   mul: Expr "*" Expr
+   > left ( add: Expr "+" Expr 
+   		  | sub: Expr "-" Expr
+   		  )
+   > left ( gt:  Expr "\>"  Expr
+          | st:  Expr "\<"  Expr
+          | gte: Expr "\>=" Expr
+          | ste: Expr "\<=" Expr
+          | eq:  Expr "="  Expr
+          | neq: Expr "!=" Expr
+          )    
+   | left ( and: Expr "&&" Expr
+          | or:  Expr "||" Expr
+          )
+   ;
+
+syntax FunDef 	= "to" FunId id VarId* Command* "end";
 syntax FunCall 	= FunId Expr* ";" ;
 
 syntax Forward 	= "forward" Expr ";" | "fd" Expr ";";
@@ -85,7 +98,7 @@ syntax Penup 	= "penup" ";" | "pu" ";";
 syntax Pencolor = "setpencolor" Color ";";
 
 syntax Logical = left Logical "&&" Logical
-			   | left Logical "||" Logical
+			   > left Logical "||" Logical
 			   | Expr
 			   ;
 			   
@@ -107,14 +120,15 @@ syntax Comparision 	= left
 					;         			
 
 lexical Boolean = "true" | "false";
-lexical Number 	= [\-]?[0-9]* ("." [0-9]+)?;
+lexical Number 	= "-"? [0-9]+ !>> [0-9]
+   				| "-"? [0-9]* "." [0-9]+ !>> [0-9];
 lexical Color = "#" [0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f];
   
 lexical VarId
-  = ":" [a-zA-Z][a-zA-Z0-9]* \Reserved  !>> [a-zA-Z0-9];
+  = ":" ([a-zA-Z][a-zA-Z0-9]*) \ Reserved !>> [a-zA-Z0-9];
   
 lexical FunId
-  = [a-zA-Z][a-zA-Z0-9]* \Reserved !>> [a-zA-Z0-9];
+  = ([a-zA-Z][a-zA-Z0-9]*) \ Reserved !>> [a-zA-Z0-9];
 
 
 layout Standard 

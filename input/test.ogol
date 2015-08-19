@@ -2,7 +2,22 @@
 
 ---------- Comment
 
-if -0.0 [home;]
+pendown;
+
+repeat 5 [
+	forward 10;
+	right 45;
+	forward 10;
+	right 45;
+	forward 10;
+	right 90;
+	forward 10;
+	right 90;
+	back 10;
+]
+
+penup;
 
 
-if 12 * 3 /3 * 5 [home;]
+-- prase(#Program, "")
+-- /amb(_)

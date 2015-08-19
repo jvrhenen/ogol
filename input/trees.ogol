@@ -6,4 +6,17 @@ to tree :size
   	lt 30; bk :size;
   	setpencolor #123abc;
   ]
+  
+  ifelse :size >= 5 || :size <=10 [
+  	forward :size;
+  ] [
+  	forward 1;
+  ]
+  
+  if :size >= 5 || :size <= 10 [
+  	forward :size;
+  ] else [
+  	forward 1;
+  ]
+  
 end
