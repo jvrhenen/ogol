@@ -18,14 +18,14 @@ bool canParse(c1, str expr) {
 }
 
 bool visParseTree() {
-	pt = parse(#start[Program], |project://SSPMSE/input/test.ogol|);
+	pt = parse(#start[Program], |project://SSPMSE/input/trees.ogol|);
 	renderParsetree(pt);
 	
 	return true;
 }
 
 bool runProgram() {
-	pt = parse(#start[Program], |project://SSPMSE/input/dashed.ogol|);
+	pt = parse(#start[Program], |project://SSPMSE/input/trees.ogol|);
 	canvas = eval(desugar(pt.top));
 	
 	compileCanvas(canvas, |project://SSPMSE/input/ogol.js|);

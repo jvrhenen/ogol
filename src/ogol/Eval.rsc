@@ -53,10 +53,9 @@ Canvas eval(p:(Program)`<Command * cmds>`) {
 FunEnv collectFunDefs(Program p) = (f.id: f | /FunDef f:= p);
 
 // Commands
-State eval(Command cmd, FunEnv fenv, VarEnv venv, State state)
+default State eval(Command cmd, FunEnv fenv, VarEnv venv, State state)
 {
-	println(cmd);
-	return state;
+	throw "Cannot eval: <cmd>";
 }
 
 State eval((Block)`[<Command* cmds>]`, FunEnv fenv, VarEnv venv, State state) {
@@ -169,30 +168,32 @@ State eval((Command)`to <FunId f> <VarId* vars> <Command* cmds> end`, FunEnv fen
 	return state;
 }
 
-State eval((Command)`<FunId f> <Expr* exprs>;`, FunEnv fenv, VarEnv venv, State state) {
+State eval((Command)`<FunId f> <Expr* es>;`, FunEnv fenv, VarEnv venv, State state) {
 	funDef = fenv[f];
 	
-	vars = [ vid | VarId vid <- funDef.vars];
+	VarEnv varEn = venv;
 	
-	println(size(vars));
-
+	vars = [];
+	for(VarId v <- funDef.vars) { vars = vars + v; }
+	
+	exprs = [];
+	for(Expr e <- es) { exprs = exprs + e; }
+	
 	
 	for(int i <- [0 .. size(vars)] ) {
-		value var = funDef.vars[i];
-		println(var);
+		Expr e = exprs[i];
+		venv = venv + (vars[i]: eval(e, venv) );
 	}
-	
+		
 	for(Command c <- funDef.cmds) {
-		println("cmd");
-		
-		
-		// expr -> venv
 		state = eval(c, fenv, venv, state);
 	}
 	return state;
 }
- 
 
+/*State eval((Command)`setpencolor <Color c>;`, FunEnv fenv, VarEnv venv, State state) {
+	return state;
+}*/
 
 // Booleans
 Value eval((Expr)`true`, VarEnv env) = boolean(true);
