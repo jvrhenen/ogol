@@ -283,7 +283,7 @@ default Value eval(Expr e, VarEnv _) {
 
 // Boolean
 test bool testTrue() = eval((Expr)`true`, ()) ==  boolean(true);
-test bool testTrue() = eval((Expr)`false`, ()) ==  boolean(false);
+test bool testFalse() = eval((Expr)`false`, ()) ==  boolean(false);
 
 // Numbers
 test bool testNumber() = eval((Expr)`-1.23`, ()) == number(-1.23);

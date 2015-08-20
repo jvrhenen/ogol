@@ -8,6 +8,7 @@ to tree :size
   	lt 30; 
   		bk :size;
   ]
+  
 end
 
 pendown;

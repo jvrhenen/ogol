@@ -59,7 +59,6 @@ syntax Command = "if" Expr Block
 			   | Left
 			   | Pendown
 			   | Penup
-			   | Pencolor
 			   | FunDef
 			   | FunCall
 			   ;

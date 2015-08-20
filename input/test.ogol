@@ -1,23 +1,34 @@
+to a 
+	b;
+end
 
+to b
+	c;
+	d;
+end
 
----------- Comment
+to c
+	
+end
 
-pendown;
+to d
+	c;
+	e;
+end
 
-repeat 5 [
-	forward 10;
-	right 45;
-	forward 10;
-	right 45;
-	forward 10;
-	right 90;
-	forward 10;
-	right 90;
-	back 10;
-]
+to e
+	
+end
 
-penup;
+to g
+	e;
+end
 
+to f
+	e;
+	g;
+end
 
--- prase(#Program, "")
--- /amb(_)
+to h
+
+end
