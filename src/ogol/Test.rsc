@@ -38,7 +38,7 @@ void visGraph() {
 	          edge("C", "E"), edge("C", "F"), edge("D", "E"), edge("D", "F"),
 	          edge("A", "F")
 	    	]; 
-	render(graph(nodes, edges, hint("layered"), gap(100)));
+	render(graph(nodes, edges, hint("spring"), gap(100)));
 }
 
 bool runProgram() {

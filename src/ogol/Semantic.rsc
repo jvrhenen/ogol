@@ -41,7 +41,7 @@ Edges functionCalls(Uses uses) {
 	for(<str funcName, loc src, str scopeName> <- uses) {
 		str from = last(split("/", scopeName));
 		if(from != "global") {
-			edges = edges + edge(from, "<funcName>");
+			edges = edges + edge(from, "<funcName>", toArrow(triangle(20)) );
 		}
 	}
 	return edges;
