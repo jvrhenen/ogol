@@ -171,14 +171,8 @@ State eval((Command)`to <FunId f> <VarId* vars> <Command* cmds> end`, FunEnv fen
 State eval((Command)`<FunId f> <Expr* es>;`, FunEnv fenv, VarEnv venv, State state) {
 	funDef = fenv[f];
 	
-	VarEnv varEn = venv;
-	
-	vars = [];
-	for(VarId v <- funDef.vars) { vars = vars + v; }
-	
-	exprs = [];
-	for(Expr e <- es) { exprs = exprs + e; }
-	
+	vars = [v | VarId v <- funDef.vars];
+	exprs = [e | Expr e <- es];
 	
 	for(int i <- [0 .. size(vars)] ) {
 		Expr e = exprs[i];
