@@ -48,9 +48,9 @@ bool runProgram() {
 	analyseProgram(pg);
 	
 	
-	//canvas = eval(pg);
+	canvas = eval(pg);
 	
-	//compileCanvas(canvas, |project://SSPMSE/input/ogol.js|);
+	compileCanvas(canvas, |project://SSPMSE/input/ogol.js|);
 	
 	return true;
 }
