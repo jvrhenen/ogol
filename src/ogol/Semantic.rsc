@@ -31,6 +31,7 @@ void callGraph(p:(Program)`<Command * cmds>`, str n) {
 	println("Not used calls:");
 	println(notUsedCalls(defs, uses));
 }
+	
 
 Figures functionFigures(Definitions defs) {
 	nodes = [];
