@@ -13,18 +13,23 @@ import analysis::graphs::Graph;
 alias Definitions = lrel[str funcName, str scopeName];
 alias Uses = rel[str funcName, loc src, str scopeName];
 
-void analyseProgram(Program p) {
-	callGraph(p);
+void analyseProgram(Program p, str n) {
+	callGraph(p, n);
 }
 
-void callGraph(p:(Program)`<Command * cmds>`) {
+void callGraph(p:(Program)`<Command * cmds>`, str n) {
 	Definitions defs = funcInCommands("global", cmds, [  ] );
 	
 	Uses uses = funcUsedInCommands("global", cmds, defs);
 	
+	
 	render(graph(functionFigures(defs), functionCalls(uses), hint("layered"), gap(100)));
 	
-	notUsedCalls(defs, uses);
+	println("Reachable from \'<n>\'");
+	println(reachableFrom(uses, n));
+	
+	println("Not used calls:");
+	println(notUsedCalls(defs, uses));
 }
 
 Figures functionFigures(Definitions defs) {
@@ -47,9 +52,7 @@ Edges functionCalls(Uses uses) {
 	return edges;
 }
 
-
-
-void notUsedCalls(Definitions defs, Uses uses) {
+list[str] notUsedCalls(Definitions defs, Uses uses) {
 	calls = {};
 	for(<str funcName, loc src, str scopeName> <- uses) {
 		str from = last(split("/", scopeName));
@@ -69,7 +72,20 @@ void notUsedCalls(Definitions defs, Uses uses) {
 	for(<str funcName, loc src, str scopeName> <- uses) {
 		allCalledFuncs = allCalledFuncs + "<funcName>";
 	}
-	println(allFuncs - allCalledFuncs);
+	return (allFuncs - allCalledFuncs);
+}
+
+set[str] reachableFrom(Uses uses, str from) {
+	calls = {};
+	for(<str funcName, loc src, str scopeName> <- uses) {
+		str from = last(split("/", scopeName));
+		if(from != "global") {
+			calls = calls + <from, "<funcName>">;
+		}
+	}
+	
+	rel[str, str] closureCalls = calls+;
+	return closureCalls[from];
 }
 
 // Semantic
